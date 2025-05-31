@@ -1,32 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Shape Combiner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
 <body>
     <main id="app">
-        <div class="d-flex flex-row align-content-stretch" style="height: 100%;">
-            <div class="d-flex flex-column" style="width: 200px;">
-                <div class="" id="drop-input">
-                    <input type="file" accept="image/*" multiple id="file-input"/>
-                    <div id="drop-target">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+        <div class="container" style="padding-top: 20px;">
+            <div class="row">
+                <div class="col">
+                    <div class="drop-input drop-input-head">
+                        <input class="file-input" type="file" accept=".xml" multiple id="headInput"/>
+                        <div class="drop-target">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <strong id="headFileName">Drop head shape here</strong>
+                        </div>
                     </div>
                 </div>
-                <div id="container-stats" class="form-group p-2">
-                    <input id="stats" class="form-control" type="number" value="4" min="1" max="64" autocomplete="off"/>
-                </div>
-                <div class="flex-grow-1" id="container-img"></div>
             </div>
-            <div class="flex-grow-1" id="container-canvas">
-                <canvas width="2048" height="2048" id="canvas-working-panel"></canvas>
+            <div class="row">
+                <div class="col">
+                    <div class="text">+</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="drop-input drop-input-body">
+                        <input class="file-input" type="file" accept=".xml" multiple id="bodyInput"/>
+                        <div class="drop-target">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <strong id="bodyFileName">Drop body shape here</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="text">🠋</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="button-combine" type="button" id="combine">Combine</button>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="card card-body" id="overview">
+                        <h3>概述： </h3>
+                        <p>这是一个将 Second Life 中一个人物的头部与另一个人物的身体组合的工具。当你已经有喜欢的人物，但想使用新的或不同的头部时，这个工具会很有帮助。</p>
+                        <h3>如何使用： </h3>
+                        <p>要使用此工具，您首先需要从 Second Life 导出所需的头部形状和所需的身体形状：</p>
+                        <ol>
+                            <li>在查看器的设置中启用“开发人员”菜单。 </li>
+                            <li>打开开发者菜单，选择头像-&gt;角色测试-&gt;外观到 XML。 </li>
+                        </ol>
+                        <p>要将组合的形状导入 Second Life：</p>
+                        <ol>
+                            <li>在您的库存中单击鼠标右键-&gt;新建-&gt;新身体部位-&gt;新形状。 </li>
+                            <li>穿上新创造的形状。 </li>
+                            <li>编辑新形状-&gt;导入-&gt;选择组合形状。 </li>
+                            <li>点击“保存” </li>
+                        </ol>
+                        <h3>信用： </h3>
+                        <span>相同 <a href="https://gitlab.com/Captain_Ai/dr-frank-shape-combiner_">此工具组合形状的方法与Dr Frank 的 Shape Combiner </a></span>
+                        <span>。他们还提供了 <a href="https://aiaicapta.in/dr-frank/">可视化指南。 </a>关于如何将形状导出和导入 Second Life 的 </span>
+                        </div>
+                </div>
             </div>
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="app.bundle.js"></script>
 </body>

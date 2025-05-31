@@ -1,16 +1,35 @@
 #app {
-    height: 100vh;
 }
 
-#drop-input {
-    background: linear-gradient(180deg, #489234, #5cba42);
+.col {
+    overflow: hidden;
+}
+
+.text {
+    text-align: center;
+    font-size: 5vh;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(114, 114, 114);
+}
+
+.drop-input {
     position: relative;
     overflow: hidden;
-    min-height: 200px;
-    height: 200px;
+    min-height: 160px;
+    height: 160px;
 }
 
-#file-input {
+.drop-input-head {
+    background: linear-gradient(180deg, #489234, #5cba42);
+}
+
+.drop-input-body {
+    background: linear-gradient(180deg, #2a5a81, #2c85ad);
+}
+
+.file-input {
     font-size: 0;
     height: 150%;
     width: 100vw;
@@ -20,21 +39,20 @@
     z-index: 1;
 }
 
-#drop-target {
+.drop-target {
     position: relative;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    &:before {
+    >strong {
         color: rgba(255, 255, 255, .5);
         font-size: 2vh;
-        content: 'Drop image here';
         margin: 0 auto;
     }
 
-    >* {
+    >div {
         position: absolute;
         border: 3px rgba(255, 255, 255, .5);
         margin: 4px;
@@ -67,57 +85,17 @@
     }
 }
 
-#container-img {
-    overflow: hidden;
-    overflow-y: auto;
-    background-color: #999999;
-    padding: 8px;
-
-    .thumbnail {
-        margin-bottom: 4px;
-        height: 168px;
-        width: 168px;
-        border: 4px solid transparent;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-        &.force {
-            border-color: #489234;
-        }
-
-        >img {
-            height: 100%;
-            width: 100%;
-            display: inline-block;
-        }
-    }
-}
-
-#container-stats {
-    background-color: #227799;
-
-    >input {
-        background-color: #FFFFFF;
-    }
-}
-
-#container-canvas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #333333;
-    padding: 32px;
-}
-
-#canvas-working-panel {
-    max-height: 100%;
-    max-width: 100%;
-    border: 1px solid #FFFFFF;
-    background: url(canvas-working-panel-background.png);
-}
-
 .bd-highlight {
     background-color: aquamarine;
+}
+
+.button-combine {
+    width: 100%;
+    min-height: 100px;
+    height: 100px;
+    border: 4px solid rgb(165, 165, 165);
+    font-weight: bold;
+    color: rgba(255, 255, 255, .5);
+    font-size: 3vh;
+    background: linear-gradient(180deg, #616161, #818181);
 }

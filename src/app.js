@@ -1,76 +1,60 @@
 import './app.less'
 
-const CTX_WORKING_PANEL = $('#canvas-working-panel').get(0).getContext("2d")
-const INPUT_FILE = $('#file-input')
-const INPUT_STATS = $('#stats')
-const IMG_LIST = $("#container-img")
-let CURRENT_IMAGE = ""
-const IMAGES = []
-console.log(CTX_WORKING_PANEL)
+const bodyIds = [ 33, 34, 637, 11001 ];
+const torsoIds = [ 649, 678, 683, 756, 36, 105, 507, 684, 685, 693, 675, 38, 676, 157 ];
+const legsIds = [ 652, 692, 37, 842, 795, 879, 753, 841, 515 ];
 
-function Render() {
-    if(CURRENT_IMAGE == "") return;
-    let img = new Image()
-    img.onload = function() {
-        let stats = +INPUT_STATS.val()
-        let size = 2048 / stats
-        let canvas = document.createElement('canvas'),ctx = canvas.getContext('2d')
-        canvas.height = img.height
-        canvas.width = img.width
-        ctx.drawImage(img, 0, 0, img.width, img.height)
-        CTX_WORKING_PANEL.clearRect(0, 0, 2048, 2048)
-        for(let i = 0; i < stats; i++) {
-            CTX_WORKING_PANEL.drawImage(canvas, size * i, size * i, size, size)
-        }
-    }
-    img.src = CURRENT_IMAGE
-}
-
-const loadImage = async function(file) {
+function readFile(file) {
+    console.log(file);
     return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = async function(e) {
-            const image = new Image();
-            image.src = e.target.result
-        
-            image.onload = function() {
-                resolve(image);
-            }
-            image.onerror = reject;
-        }
-        
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    })
+        let fileContent = '';
+        let fileReader = new FileReader();
+        fileReader.onloadend = (event) => {
+            fileContent = event.target.result;
+            resolve(fileContent);
+        };
+        fileReader.onerror = (error) => { reject(error) };
+        fileReader.readAsText(file);
+    });
 }
 
-INPUT_FILE.on('change', async function(e) {
-    console.log(e.target.files)
-    let len = e.target.files.length
-    let startIndex = IMAGES.length
-    for(let i = 0; i < len; i++) {
-        let index = "s" + e.target.files[i].size + "_" + e.target.files[i].name;
-        if(IMAGES.indexOf(index) == -1) {
-            IMAGES.push(index)
-            let img = await loadImage(e.target.files[i])
-            IMG_LIST.append($('<div class="thumbnail"></div>').append(img))
-        }
+async function getXml(fileInputId) {
+    const parser = new DOMParser();
+    const file = document.getElementById(fileInputId).files[0];
+    const fileContent = await readFile(file);
+    return parser.parseFromString(fileContent, "text/xml");
+}
+
+$("#combine").on("click", async function mergeShapes() {
+    const headXml = await getXml("headInput");
+    const bodyXml = await getXml("bodyInput");
+
+    if (headXml.querySelector("parsererror") ||
+        bodyXml.querySelector("parsererror")) {
+        alert("Error reading shape files.");
+    } else {
+        [].concat(bodyIds, torsoIds, legsIds).forEach(id => {
+            let sourceNode = bodyXml.querySelector("[id='" + id + "']");
+            let targetNode = headXml.querySelector("[id='" + id + "']");
+            targetNode.getAttributeNode("value").nodeValue = sourceNode.getAttributeNode("value").nodeValue;
+            targetNode.getAttributeNode("u8").nodeValue = sourceNode.getAttributeNode("u8").nodeValue;
+        });
+        const combinedShapeString = new XMLSerializer().serializeToString(headXml);
+        const combinedShapeBlob = new Blob([combinedShapeString], { type: "text/xml" });
+        const fileURL = URL.createObjectURL(combinedShapeBlob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = fileURL;
+        downloadLink.download = "combined-shape.xml";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        URL.revokeObjectURL(fileURL);
     }
-    IMG_LIST.find('.force').removeClass('force')
-    let t = IMG_LIST.children().eq(startIndex)
-    t.addClass('force')
-    CURRENT_IMAGE = t.find('img').attr('src')
-    Render();
-})
+});
 
-IMG_LIST.delegate('.thumbnail', 'click', {}, function(e) {
-    IMG_LIST.find('.force').removeClass('force')
-    let el = $(this)
-    el.addClass('force')
-    CURRENT_IMAGE = el.find('img').attr('src')
-    Render()
-})
+$("#headInput").on("change", (e) => {
+    $("#headFileName").text(e.target.files[0].name);
+});
 
-INPUT_STATS.on('change', function(e) {
-    Render()
-})
+$("#bodyInput").on("change", (e) => {
+    $("#bodyFileName").text(e.target.files[0].name);
+});
