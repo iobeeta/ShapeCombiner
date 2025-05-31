@@ -1,0 +1,21 @@
+{
+  "name": "shape-combiner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development --watch"
+  },
+  "keywords": [],
+  "author": "iobeeta",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "less": "^4.2.1",
+    "less-loader": "^12.2.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  }
+}

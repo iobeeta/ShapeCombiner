@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <main id="app">
+        <div class="d-flex flex-row align-content-stretch" style="height: 100%;">
+            <div class="d-flex flex-column" style="width: 200px;">
+                <div class="" id="drop-input">
+                    <input type="file" accept="image/*" multiple id="file-input"/>
+                    <div id="drop-target">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div id="container-stats" class="form-group p-2">
+                    <input id="stats" class="form-control" type="number" value="4" min="1" max="64" autocomplete="off"/>
+                </div>
+                <div class="flex-grow-1" id="container-img"></div>
+            </div>
+            <div class="flex-grow-1" id="container-canvas">
+                <canvas width="2048" height="2048" id="canvas-working-panel"></canvas>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="app.bundle.js"></script>
+</body>
+</html>
